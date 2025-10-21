@@ -27,17 +27,17 @@ export class PositionsService {
   }
 
   // ✅ Create new position (id auto-increments)
-  async create(position_code: string, position_name: string, user_id?: number) {
+  async createPositions(position_code: string, position_name: string, id: number) {
     const [result] = await this.pool().execute<OkPacket>(
-      'INSERT INTO positions (position_code, position_name, user_id) VALUES (?, ?, ?)',
-      [position_code, position_name, user_id ?? null],
+      'INSERT INTO positions (position_code, position_name, id) VALUES (?, ?, ?)',
+      [position_code, position_name, id?? null]
     );
 
     return {
-      position_id: result.insertId,
+      position_id: (result as any).insertId,
       position_code,
       position_name,
-      user_id,
+      id,
     };
   }
 

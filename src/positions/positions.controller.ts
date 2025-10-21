@@ -35,15 +35,15 @@ export class PositionsController {
   // POST new position
   @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Req() req: ExpressRequest, @Body() body: any) {
+    async create(
+    @Req() req: ExpressRequest, 
+    @Body() body: any
+    ) {
+
     const { position_code, position_name } = body;
-    const userId = (req.user as any)?.userId; // ✅ FIXED (was sub)
+    const userId = (req.user as any)?.id; 
 
-    if (!position_code || !position_name) {
-      return { message: 'position_code and position_name are required' };
-    }
-
-    return this.positionsService.create(position_code, position_name, userId);
+    return this.positionsService.createPositions(position_code, position_name, userId);
   }
 
   //  PUT update position
